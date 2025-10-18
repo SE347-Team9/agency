@@ -1,8 +1,7 @@
 .app-header {
-  height: 64px;
-  background: white;
-  border-bottom: 1px solid #e8ecf1;
-  position: fixed;
+  height: 85px;
+  background: transparent;
+  border-bottom: none;
   top: 0;
   right: 0;
   left: 280px;
@@ -16,14 +15,10 @@
 
 .header-content {
   height: 100%;
-  padding: 0 24px;
+  padding: 24px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-left {
-  flex: 1;
+  align-items: flex-start;
+  justify-content: flex-end;
 }
 
 .header-right {
@@ -33,21 +28,25 @@
 }
 
 .header-icon-btn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: none;
-  background: #f8f9fa;
-  border-radius: 50%;
+  background: white;
+  border-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
-  color: #5f6368;
+  transition: all 0.3s;
+  color: #475569;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-icon-btn:hover {
-  background: #e8ecf1;
+  background: #1a73e8;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
 }
 
 .user-profile {
@@ -58,12 +57,21 @@
 }
 
 .user-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #e8f0fe;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #1a73e8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.user-profile:hover .user-avatar {
+  background: #1a73e8;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
 }

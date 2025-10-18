@@ -48,7 +48,7 @@ const AgencyManagement = () => {
       {/* Content Grid */}
       <div className="content-grid">
         {/* Account Information Card */}
-        <div className="info-card">
+        <div className="profile-info-card">
           <div className="card-header">
             <User size={20} />
             <h2>HỒ SƠ TÀI KHOẢN</h2>
@@ -105,7 +105,7 @@ const AgencyManagement = () => {
         </div>
 
         {/* Agency Information Card */}
-        <div className="info-card">
+        <div className="profile-info-card">
           <div className="card-header">
             <Building2 size={20} />
             <h2>HỒ SƠ ĐẠI LÝ</h2>

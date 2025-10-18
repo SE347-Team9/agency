@@ -78,14 +78,14 @@
   gap: 32px;
 }
 
-/* Info Card */
-.info-card {
+/* Profile Info Card */
+.profile-info-card {
   background: white;
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow: visible;
   padding: 24px;
-  display:inline;
+  display: block;
 }
 
 .card-header {

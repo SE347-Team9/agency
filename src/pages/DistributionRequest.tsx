@@ -281,28 +281,28 @@ const DistributionRequest = () => {
 
       {/* Important Information Section */}
       <div className="info-section">
-        <div className="info-icon">
-          <Package size={24} />
-        </div>
-        <div className="info-content">
+        <div className="info-section-header">
+          <div className="info-icon">
+            <Package size={28} />
+          </div>
           <h3>Thông tin quan trọng</h3>
-          <div className="info-grid">
-            <div className="info-card">
-              <Clock size={20} />
-              <span>Xử lý trong 24-48 giờ làm việc</span>
-            </div>
-            <div className="info-card">
-              <MapPin size={20} />
-              <span>Địa chỉ phải chính xác</span>
-            </div>
-            <div className="info-card">
-              <Package size={20} />
-              <span>Kiểm tra hạn mức sản phẩm</span>
-            </div>
-            <div className="info-card">
-              <Send size={20} />
-              <span>Cập nhật trạng thái tự động</span>
-            </div>
+        </div>
+        <div className="info-grid">
+          <div className="info-card">
+            <Clock size={20} />
+            <span>Xử lý trong 24-48 giờ làm việc</span>
+          </div>
+          <div className="info-card">
+            <MapPin size={20} />
+            <span>Địa chỉ phải chính xác</span>
+          </div>
+          <div className="info-card">
+            <Package size={20} />
+            <span>Kiểm tra hạn mức sản phẩm</span>
+          </div>
+          <div className="info-card">
+            <Send size={20} />
+            <span>Cập nhật trạng thái tự động</span>
           </div>
         </div>
       </div>
