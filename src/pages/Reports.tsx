@@ -1,4 +1,6 @@
 import { FileText, Eye, FileSpreadsheet, Download, TrendingUp, TrendingDown, CheckCircle2, Users2 } from 'lucide-react'
+import * as XLSX from 'xlsx'
+import html2pdf from 'html2pdf.js'
 import './Reports.css'
 
 interface Report {
@@ -126,6 +128,103 @@ const Reports = () => {
     }
   }
 
+  // Export single report to Excel
+  const exportSingleReportToExcel = (report: Report) => {
+    const wb = XLSX.utils.book_new()
+    
+    // Report details
+    const reportDetails = [
+      { 'Thông tin': 'Mã báo cáo', 'Giá trị': report.code },
+      { 'Thông tin': 'Tiêu đề', 'Giá trị': report.title },
+      { 'Thông tin': 'Loại báo cáo', 'Giá trị': report.typeLabel },
+      { 'Thông tin': 'Kỳ báo cáo', 'Giá trị': report.createdDate },
+      { 'Thông tin': 'Trạng thái', 'Giá trị': report.statusLabel },
+      { 'Thông tin': 'Ngày tạo', 'Giá trị': report.createdAt }
+    ]
+    
+    const ws = XLSX.utils.json_to_sheet(reportDetails)
+    XLSX.utils.book_append_sheet(wb, ws, 'Chi tiết báo cáo')
+    
+    // Add relevant data based on report type
+    if (report.type === 'revenue') {
+      const revenueData = topRevenueAgencies.map(agency => ({
+        'Mã đại lý': agency.code,
+        'Tên đại lý': agency.name,
+        'Doanh số': agency.revenue
+      }))
+      const ws2 = XLSX.utils.json_to_sheet(revenueData)
+      XLSX.utils.book_append_sheet(wb, ws2, 'Doanh số đại lý')
+    } else if (report.type === 'debt') {
+      const debtData = topDebtAgencies.map(agency => ({
+        'Mã đại lý': agency.code,
+        'Tên đại lý': agency.name,
+        'Công nợ': agency.debt
+      }))
+      const ws2 = XLSX.utils.json_to_sheet(debtData)
+      XLSX.utils.book_append_sheet(wb, ws2, 'Công nợ đại lý')
+    }
+    
+    const fileName = `BaoCao_${report.code}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`
+    XLSX.writeFile(wb, fileName)
+  }
+
+  // Export single report to PDF with proper Vietnamese font support
+  const exportSingleReportToPDF = (report: Report) => {
+    // Create HTML content for PDF
+    const htmlContent = `
+      <div style="font-family: 'Arial Unicode MS', Arial, sans-serif; padding: 20px; line-height: 1.6;">
+        <h1 style="text-align: center; color: #3b82f6; margin-bottom: 30px; border-bottom: 2px solid #3b82f6; padding-bottom: 10px;">
+          BÁO CÁO CHI TIẾT
+        </h1>
+        <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+          <tr style="background-color: #f5f5f5;">
+            <td style="padding: 10px 15px; border: 1px solid #ddd; font-weight: bold; width: 40%;">Mã báo cáo:</td>
+            <td style="padding: 10px 15px; border: 1px solid #ddd;">${report.code}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 15px; border: 1px solid #ddd; font-weight: bold; width: 40%;">Tiêu đề:</td>
+            <td style="padding: 10px 15px; border: 1px solid #ddd;">${report.title}</td>
+          </tr>
+          <tr style="background-color: #f5f5f5;">
+            <td style="padding: 10px 15px; border: 1px solid #ddd; font-weight: bold; width: 40%;">Loại báo cáo:</td>
+            <td style="padding: 10px 15px; border: 1px solid #ddd;">${report.typeLabel}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 15px; border: 1px solid #ddd; font-weight: bold; width: 40%;">Kỳ báo cáo:</td>
+            <td style="padding: 10px 15px; border: 1px solid #ddd;">${report.createdDate}</td>
+          </tr>
+          <tr style="background-color: #f5f5f5;">
+            <td style="padding: 10px 15px; border: 1px solid #ddd; font-weight: bold; width: 40%;">Trạng thái:</td>
+            <td style="padding: 10px 15px; border: 1px solid #ddd;">${report.statusLabel}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 15px; border: 1px solid #ddd; font-weight: bold; width: 40%;">Ngày tạo:</td>
+            <td style="padding: 10px 15px; border: 1px solid #ddd;">${report.createdAt}</td>
+          </tr>
+        </table>
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 10px; color: #888;">
+          <p style="margin: 0;">Ngày xuất: ${new Date().toLocaleDateString('vi-VN')}</p>
+        </div>
+      </div>
+    `
+    
+    // Create a temporary container
+    const element = document.createElement('div')
+    element.innerHTML = htmlContent
+    
+    // Configure html2pdf options
+    const opt = {
+      margin: 10,
+      filename: `BaoCao_${report.code}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.pdf`,
+      image: { type: 'jpeg' as const, quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { orientation: 'portrait' as const, unit: 'mm', format: 'a4' }
+    }
+    
+    // Generate PDF
+    html2pdf().set(opt).from(element).save()
+  }
+
   return (
     <div className="reports-page">
       {/* Page Header */}
@@ -226,10 +325,18 @@ const Reports = () => {
                       <button className="btn-icon" title="Xem">
                         <Eye size={18} />
                       </button>
-                      <button className="btn-icon" title="Excel">
+                      <button 
+                        className="btn-icon" 
+                        title="Xuất Excel"
+                        onClick={() => exportSingleReportToExcel(report)}
+                      >
                         <FileSpreadsheet size={18} />
                       </button>
-                      <button className="btn-icon" title="Tải xuống">
+                      <button 
+                        className="btn-icon" 
+                        title="Xuất PDF"
+                        onClick={() => exportSingleReportToPDF(report)}
+                      >
                         <Download size={18} />
                       </button>
                     </div>
