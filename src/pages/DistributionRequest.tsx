@@ -9,6 +9,12 @@ interface Product {
   unit: string
 }
 
+interface ProductInputRow {
+  rowId: string
+  selectedProduct: string
+  quantity: number
+}
+
 interface OrderHistory {
   id: string
   code: string
@@ -21,9 +27,10 @@ interface OrderHistory {
 }
 
 const DistributionRequest = () => {
+  const [productRows, setProductRows] = useState<ProductInputRow[]>([
+    { rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }
+  ])
   const [products, setProducts] = useState<Product[]>([])
-  const [selectedProduct, setSelectedProduct] = useState('')
-  const [quantity, setQuantity] = useState(1)
   const [address, setAddress] = useState('')
   const [onHold, setOnHold] = useState(false)
 
@@ -44,18 +51,23 @@ const DistributionRequest = () => {
     }
   ]
 
-  const handleAddProduct = () => {
-    if (selectedProduct && quantity > 0) {
-      const newProduct: Product = {
-        id: Date.now().toString(),
-        name: selectedProduct,
-        quantity: quantity,
-        unit: 'Cái'
-      }
-      setProducts([...products, newProduct])
-      setSelectedProduct('')
-      setQuantity(1)
-    }
+  const handleAddProductRow = () => {
+    setProductRows([
+      ...productRows,
+      { rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }
+    ])
+  }
+
+  const handleRemoveProductRow = (rowId: string) => {
+    setProductRows(productRows.filter(row => row.rowId !== rowId))
+  }
+
+  const handleProductRowChange = (rowId: string, field: string, value: any) => {
+    setProductRows(productRows.map(row =>
+      row.rowId === rowId
+        ? { ...row, [field]: value }
+        : row
+    ))
   }
 
   const handleSubmit = () => {
@@ -67,8 +79,7 @@ const DistributionRequest = () => {
     setProducts([])
     setAddress('')
     setOnHold(false)
-    setSelectedProduct('')
-    setQuantity(1)
+    setProductRows([{ rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }])
   }
 
   return (
@@ -103,47 +114,63 @@ const DistributionRequest = () => {
               <span className="required">*</span>
             </label>
 
-            <div className="product-input-row">
-              <div className="input-group">
-                <label>Sản phẩm</label>
-                <select 
-                  className="form-select"
-                  value={selectedProduct}
-                  onChange={(e) => setSelectedProduct(e.target.value)}
-                >
-                  <option value="">Chọn sản phẩm...</option>
-                  <option value="Nước ngọt Pepsi">Nước ngọt Pepsi</option>
-                  <option value="Sữa Vinamilk">Sữa Vinamilk</option>
-                  <option value="Bánh quy Oreo">Bánh quy Oreo</option>
-                </select>
-              </div>
+            {productRows.map((row) => (
+              <div key={row.rowId} className="product-input-row">
+                <div className="input-group">
+                  <label>Sản phẩm</label>
+                  <select 
+                    className="form-select"
+                    value={row.selectedProduct}
+                    onChange={(e) => handleProductRowChange(row.rowId, 'selectedProduct', e.target.value)}
+                  >
+                    <option value="">Chọn sản phẩm...</option>
+                    <option value="Nước ngọt Pepsi">Nước ngọt Pepsi</option>
+                    <option value="Sữa Vinamilk">Sữa Vinamilk</option>
+                    <option value="Bánh quy Oreo">Bánh quy Oreo</option>
+                  </select>
+                </div>
 
-              <div className="input-group">
-                <label>Số lượng</label>
-                <input 
-                  type="number" 
-                  className="form-input"
-                  value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value))}
-                  min="1"
-                />
-              </div>
+                <div className="input-group">
+                  <label>Số lượng</label>
+                  <input 
+                    type="number" 
+                    className="form-input"
+                    value={row.quantity}
+                    onChange={(e) => handleProductRowChange(row.rowId, 'quantity', Number(e.target.value))}
+                    min="1"
+                  />
+                </div>
 
-              <div className="input-group">
-                <label>Đơn vị tính</label>
-                <input 
-                  type="text" 
-                  className="form-input disabled"
-                  value="Tự động điền từ sản phẩm"
-                  disabled
-                />
-              </div>
+                <div className="input-group">
+                  <label>Đơn vị tính</label>
+                  <input 
+                    type="text" 
+                    className="form-input disabled"
+                    value="Tự động điền từ sản phẩm"
+                    disabled
+                  />
+                </div>
 
-              <button className="btn-add-product" onClick={handleAddProduct}>
-                <Plus size={20} />
-                Thêm sản phẩm
-              </button>
-            </div>
+                <div className="product-row-actions">
+                  {productRows.length > 1 && (
+                    <button 
+                      className="btn-remove-row"
+                      onClick={() => handleRemoveProductRow(row.rowId)}
+                    >
+                      Xóa
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+
+            <button 
+              className="btn-add-row"
+              onClick={handleAddProductRow}
+            >
+              <Plus size={16} />
+              Thêm sản phẩm
+            </button>
 
             {products.length > 0 && (
               <div className="added-products">

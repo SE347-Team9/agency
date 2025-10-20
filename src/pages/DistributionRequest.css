@@ -166,6 +166,54 @@
   box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
 }
 
+.product-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-remove-row {
+  padding: 10px 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-remove-row:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-add-row {
+  margin-top: 16px;
+  padding: 12px 24px;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-add-row:hover {
+  background: #1557b0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
 /* Added Products */
 .added-products {
   margin-top: 16px;
