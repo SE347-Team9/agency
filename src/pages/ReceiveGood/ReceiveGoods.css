@@ -3,45 +3,9 @@
   margin: 0 auto;
 }
 
-/* Header Section */
-.page-header {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  margin-bottom: 32px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.header-icon-box {
-  width: 72px;
-  height: 72px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  flex-shrink: 0;
-}
-
-.header-text {
-  flex: 1;
-}
-
-.page-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 8px 0;
-}
-
-.page-subtitle {
-  font-size: 15px;
-  color: #718096;
-  margin: 0;
+/* ReceiveGoods specific header styling - override icon gradient */
+.receive-goods .header-icon-box {
+  background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
 }
 
 /* Statistics Cards */
@@ -52,7 +16,7 @@
   margin-bottom: 32px;
 }
 
-.stat-card {
+.receive-stat-card {
   background: white;
   border-radius: 16px;
   padding: 24px;
@@ -63,16 +27,16 @@
   transition: all 0.3s ease;
 }
 
-.stat-card:hover {
+.receive-stat-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.stat-card.stat-blue {
+.receive-stat-card.stat-blue {
   border-left: 4px solid #3b82f6;
 }
 
-.stat-card.stat-green {
+.receive-stat-card.stat-green {
   border-left: 4px solid #10b981;
 }
 

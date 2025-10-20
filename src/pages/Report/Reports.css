@@ -4,45 +4,13 @@
   padding-bottom: 40px;
 }
 
-/* Page Header */
+/* Reports specific header styling */
 .page-header {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 32px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
 }
 
-.header-icon-box {
-  width: 72px;
-  height: 72px;
+.reports-page .header-icon-box {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  flex-shrink: 0;
-}
-
-.header-text {
-  flex: 1;
-}
-
-.page-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #1a202c;
-  margin: 0 0 8px 0;
-}
-
-.page-subtitle {
-  font-size: 15px;
-  color: #718096;
-  margin: 0;
 }
 
 /* Statistics Cards Grid */
@@ -105,7 +73,7 @@
   position: absolute;
   right: 24px;
   bottom: 24px;
-  color: rgba(255, 255, 255, 0.25);
+  color: #fff;
   z-index: 1;
 }
 
@@ -234,11 +202,6 @@
   color: #991b1b;
 }
 
-.type-badge.type-activity {
-  background: #e9d5ff;
-  color: #6b21a8;
-}
-
 /* Status Badge */
 .status-badge {
   display: inline-flex;
@@ -289,7 +252,7 @@
   gap: 24px;
 }
 
-.stat-card {
+.report-stat-card {
   background: white;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -297,7 +260,7 @@
   display: inline;
 }
 
-.stat-card-header {
+.report-stat-card-header {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
   padding: 20px 24px;
@@ -306,31 +269,31 @@
   gap: 12px;
 }
 
-.stat-card-header.debt {
+.report-stat-card-header.debt {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
-.stat-card-header h3 {
+.report-stat-card-header h3 {
   margin: 0;
   font-size: 16px;
   font-weight: 700;
 }
 
-.stat-card-body {
+.report-stat-card-body {
   padding: 0;
 }
 
-/* Stat Table */
-.stat-table {
+/* Report Stat Table */
+.report-stat-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.stat-table thead {
+.report-stat-table thead {
   background: #f8fafc;
 }
 
-.stat-table th {
+.report-stat-table th {
   padding: 14px 20px;
   text-align: left;
   font-size: 11px;
@@ -340,32 +303,32 @@
   letter-spacing: 0.5px;
 }
 
-.stat-table tbody tr {
+.report-stat-table tbody tr {
   border-bottom: 1px solid #f1f5f9;
 }
 
-.stat-table tbody tr:last-child {
+.report-stat-table tbody tr:last-child {
   border-bottom: none;
 }
 
-.stat-table td {
+.report-stat-table td {
   padding: 16px 20px;
   font-size: 14px;
   color: #334155;
 }
 
-.agency-code {
+.report-agency-code {
   font-weight: 700;
   color: #3b82f6;
 }
 
-.revenue-value {
+.report-revenue-value {
   font-weight: 700;
   color: #10b981;
   font-size: 15px;
 }
 
-.debt-value {
+.report-debt-value {
   font-weight: 700;
   color: #ef4444;
   font-size: 15px;
@@ -383,16 +346,6 @@
 }
 
 @media (max-width: 768px) {
-  .page-header {
-    flex-direction: column;
-    text-align: center;
-    padding: 24px;
-  }
-
-  .page-title {
-    font-size: 24px;
-  }
-
   .stats-cards-grid {
     grid-template-columns: 1fr;
   }

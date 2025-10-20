@@ -83,7 +83,7 @@ const ReceiveGoods = () => {
 
       {/* Statistics Cards */}
       <div className="stats-grid">
-        <div className="stat-card stat-blue">
+        <div className="receive-stat-card stat-blue">
           <div className="stat-icon-wrapper blue">
             <Package2 size={24} />
           </div>
@@ -93,7 +93,7 @@ const ReceiveGoods = () => {
           </div>
         </div>
 
-        <div className="stat-card stat-green">
+        <div className="receive-stat-card stat-green">
           <div className="stat-icon-wrapper green">
             <ShoppingCart size={24} />
           </div>

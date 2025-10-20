@@ -2,12 +2,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './routes/auth/Login.tsx'
 import Register from './routes/auth/Register.tsx'
 import MainLayout from './components/layout/MainLayout.tsx'
-import ExportManagement from './pages/ExportManagement.tsx'
-import ReceiveGoods from './pages/ReceiveGoods.tsx'
-import DistributionRequest from './pages/DistributionRequest.tsx'
-import AgencyManagement from './pages/AgencyManagement.tsx'
-import PaymentManagement from './pages/PaymentManagement.tsx'
-import Reports from './pages/Reports.tsx'
+import ExportManagement from './pages/Export/ExportManagement.tsx'
+import ReceiveGoods from './pages/ReceiveGood/ReceiveGoods.tsx'
+import DistributionRequest from './pages/Distribution/DistributionRequest.tsx'
+import AgencyManagement from './pages/AgencyManagement/AgencyManagement.tsx'
+import PaymentManagement from './pages/Payment/PaymentManagement.tsx'
+import Reports from './pages/Report/Reports.tsx'
+import AddReport from './pages/Report/AddReport.tsx'
+import ViewReport from './pages/Report/ViewReport.tsx'
 
 function App() {
   return (
@@ -43,6 +45,16 @@ function App() {
         <Route path="/reports" element={
           <MainLayout>
             <Reports />
+          </MainLayout>
+        } />
+        <Route path="/add-report" element={
+          <MainLayout>
+            <AddReport />
+          </MainLayout>
+        } />
+        <Route path="/view-report/:reportId" element={
+          <MainLayout>
+            <ViewReport />
           </MainLayout>
         } />
         <Route path="/" element={<Navigate to="/export-management" replace />} />

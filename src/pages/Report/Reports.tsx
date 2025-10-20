@@ -1,13 +1,15 @@
-import { FileText, Eye, FileSpreadsheet, Download, TrendingUp, TrendingDown, CheckCircle2, Users2 } from 'lucide-react'
+import { FileText, Eye, FileSpreadsheet, Download, TrendingUp, TrendingDown, CheckCircle2 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import * as XLSX from 'xlsx'
 import html2pdf from 'html2pdf.js'
+import { toast } from 'react-toastify'
 import './Reports.css'
 
 interface Report {
   id: string
   code: string
   title: string
-  type: 'revenue' | 'debt' | 'activity'
+  type: 'revenue' | 'debt'
   typeLabel: string
   createdDate: string
   status: 'completed'
@@ -28,6 +30,7 @@ interface AgencyDebt {
 }
 
 const Reports = () => {
+  const navigate = useNavigate()
   // Statistics data
   const totalRevenue = 2430000
   const totalDebt = 36460000
@@ -78,17 +81,6 @@ const Reports = () => {
       status: 'completed',
       statusLabel: 'Hoàn thành',
       createdAt: '30/6/2024'
-    },
-    {
-      id: '5',
-      code: 'BC3',
-      title: 'Báo cáo',
-      type: 'activity',
-      typeLabel: 'Hoạt động',
-      createdDate: '30/6/2024',
-      status: 'completed',
-      statusLabel: 'Hoàn thành',
-      createdAt: '30/6/2024'
     }
   ]
 
@@ -108,8 +100,6 @@ const Reports = () => {
         return 'type-revenue'
       case 'debt':
         return 'type-debt'
-      case 'activity':
-        return 'type-activity'
       default:
         return ''
     }
@@ -121,8 +111,6 @@ const Reports = () => {
         return <TrendingUp size={14} />
       case 'debt':
         return <TrendingDown size={14} />
-      case 'activity':
-        return <Users2 size={14} />
       default:
         return <FileText size={14} />
     }
@@ -166,6 +154,7 @@ const Reports = () => {
     
     const fileName = `BaoCao_${report.code}_${new Date().toLocaleDateString('vi-VN').replace(/\//g, '-')}.xlsx`
     XLSX.writeFile(wb, fileName)
+    toast.success(`Xuất báo cáo ${report.code} sang Excel thành công!`)
   }
 
   // Export single report to PDF with proper Vietnamese font support
@@ -223,6 +212,7 @@ const Reports = () => {
     
     // Generate PDF
     html2pdf().set(opt).from(element).save()
+    toast.success(`Xuất báo cáo ${report.code} sang PDF thành công!`)
   }
 
   return (
@@ -268,7 +258,7 @@ const Reports = () => {
             <div className="stats-value">{agencyCount}</div>
           </div>
           <div className="stats-icon">
-            <Users2 size={48} strokeWidth={2.5} />
+            <CheckCircle2 size={48} strokeWidth={2.5} />
           </div>
         </div>
       </div>
@@ -280,7 +270,10 @@ const Reports = () => {
             <FileText size={24} />
             <h2>Danh sách báo cáo ({reports.length})</h2>
           </div>
-          <button className="btn-create-report">
+          <button 
+            className="btn-create-report"
+            onClick={() => navigate('/add-report')}
+          >
             <FileText size={20} />
             Lập báo cáo
           </button>
@@ -322,7 +315,11 @@ const Reports = () => {
                   <td className="text-muted">{report.createdAt}</td>
                   <td>
                     <div className="action-buttons">
-                      <button className="btn-icon" title="Xem">
+                      <button 
+                        className="btn-icon" 
+                        title="Xem"
+                        onClick={() => navigate(`/view-report/${report.id}`)}
+                      >
                         <Eye size={18} />
                       </button>
                       <button 
@@ -351,13 +348,13 @@ const Reports = () => {
       {/* Statistics Section */}
       <div className="statistics-grid">
         {/* Top Revenue Agencies */}
-        <div className="stat-card">
-          <div className="stat-card-header">
+        <div className="report-stat-card">
+          <div className="report-stat-card-header">
             <TrendingUp size={20} />
             <h3>Danh sách đại lý có doanh số cao nhất</h3>
           </div>
-          <div className="stat-card-body">
-            <table className="stat-table">
+          <div className="report-stat-card-body">
+            <table className="report-stat-table">
               <thead>
                 <tr>
                   <th>MÃ ĐẠI LÝ</th>
@@ -369,11 +366,11 @@ const Reports = () => {
                 {topRevenueAgencies.map((agency) => (
                   <tr key={agency.code}>
                     <td>
-                      <span className="agency-code">{agency.code}</span>
+                      <span className="report-agency-code">{agency.code}</span>
                     </td>
                     <td>{agency.name}</td>
                     <td>
-                      <span className="revenue-value">
+                      <span className="report-revenue-value">
                         {agency.revenue.toLocaleString('vi-VN')} đ
                       </span>
                     </td>
@@ -385,13 +382,13 @@ const Reports = () => {
         </div>
 
         {/* Top Debt Agencies */}
-        <div className="stat-card">
-          <div className="stat-card-header debt">
+        <div className="report-stat-card">
+          <div className="report-stat-card-header debt">
             <TrendingDown size={20} />
             <h3>Danh sách đại lý có công nợ cao nhất</h3>
           </div>
-          <div className="stat-card-body">
-            <table className="stat-table">
+          <div className="report-stat-card-body">
+            <table className="report-stat-table">
               <thead>
                 <tr>
                   <th>MÃ ĐẠI LÝ</th>
@@ -403,11 +400,11 @@ const Reports = () => {
                 {topDebtAgencies.map((agency) => (
                   <tr key={agency.code}>
                     <td>
-                      <span className="agency-code">{agency.code}</span>
+                      <span className="report-agency-code">{agency.code}</span>
                     </td>
                     <td>{agency.name}</td>
                     <td>
-                      <span className="debt-value">
+                      <span className="report-debt-value">
                         {agency.debt.toLocaleString('vi-VN')} đ
                       </span>
                     </td>

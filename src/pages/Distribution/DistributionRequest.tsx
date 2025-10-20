@@ -108,7 +108,7 @@ const DistributionRequest = () => {
         <div className="form-content">
           {/* Product List Section */}
           <div className="form-group">
-            <label className="form-label">
+            <label className="distribution-request__form-label">
               <Package size={18} />
               <span>Danh sách sản phẩm</span>
               <span className="required">*</span>
@@ -192,7 +192,7 @@ const DistributionRequest = () => {
 
           {/* Delivery Address Section */}
           <div className="form-group">
-            <label className="form-label">
+            <label className="distribution-request__form-label">
               <MapPin size={18} />
               <span>Địa chỉ giao hàng</span>
               <span className="required">*</span>
