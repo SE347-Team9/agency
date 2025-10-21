@@ -3,9 +3,33 @@
   margin: 0 auto;
 }
 
-/* ReceiveGoods specific header styling - override icon gradient */
+/* ReceiveGoods specific header styling */
+.receive-header {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .receive-goods .header-icon-box {
   background: linear-gradient(135deg, #1a73e8 0%, #1557b0 100%);
+}
+
+.receive-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 8px 0;
+}
+
+.receive-subtitle {
+  font-size: 15px;
+  color: #718096;
+  margin: 0;
 }
 
 /* Statistics Cards */
@@ -231,7 +255,7 @@
 }
 
 @media (max-width: 768px) {
-  .page-header {
+  .receive-header {
     flex-direction: column;
     text-align: center;
     padding: 24px;

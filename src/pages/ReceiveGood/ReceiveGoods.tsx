@@ -69,13 +69,13 @@ const ReceiveGoods = () => {
   return (
     <div className="receive-goods">
       {/* Header */}
-      <div className="page-header">
+      <div className="receive-header">
         <div className="header-icon-box">
           <ClipboardList size={36} />
         </div>
         <div className="header-text">
-          <h1 className="page-title">Lịch sử Nhập Kho</h1>
-          <p className="page-subtitle">
+          <h1 className="receive-title">Lịch sử Nhập Kho</h1>
+          <p className="receive-subtitle">
             Lịch sử các phiếu nhập hàng vào kho tổng cho đại lý của bạn.
           </p>
         </div>

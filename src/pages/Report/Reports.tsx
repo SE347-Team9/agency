@@ -218,13 +218,13 @@ const Reports = () => {
   return (
     <div className="reports-page">
       {/* Page Header */}
-      <div className="page-header">
+      <div className="reports-header">
         <div className="header-icon-box">
           <FileText size={36} />
         </div>
         <div className="header-text">
-          <h1 className="page-title">Lập báo cáo</h1>
-          <p className="page-subtitle">
+          <h1 className="reports-title">Lập báo cáo</h1>
+          <p className="reports-subtitle">
             Tổng hợp, thống kê và quản lý các báo cáo doanh thu, tồn kho, công nợ và hoạt động của đại lý.
           </p>
         </div>

@@ -5,12 +5,44 @@
 }
 
 /* Reports specific header styling */
-.page-header {
+.reports-header {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .reports-page .header-icon-box {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.header-text {
+  flex: 1;
+}
+
+.reports-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 8px 0;
+}
+
+.reports-subtitle {
+  font-size: 15px;
+  color: #718096;
+  margin: 0;
 }
 
 /* Statistics Cards Grid */

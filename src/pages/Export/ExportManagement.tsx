@@ -5,13 +5,13 @@ import './ExportManagement.css'
 const ExportManagement = () => {
   return (
     <div className="export-management">
-      <div className="page-header">
+      <div className="export-header">
         <div className="header-icon-box">
           <Package size={36} />
         </div>
         <div className="header-text">
-          <h1 className="page-title">Quản lý xuất hàng</h1>
-          <p className="page-subtitle">
+          <h1 className="export-title">Quản lý xuất hàng</h1>
+          <p className="export-subtitle">
             Lựa chọn chức năng phù hợp để quản lý quy trình xuất hàng của bạn một cách hiệu quả.
           </p>
         </div>

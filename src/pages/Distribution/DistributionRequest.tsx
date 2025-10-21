@@ -85,13 +85,13 @@ const DistributionRequest = () => {
   return (
     <div className="distribution-request">
       {/* Header */}
-      <div className="page-header">
+      <div className="distribution-header">
         <div className="header-icon-box">
           <Package size={36} />
         </div>
         <div className="header-text">
-          <h1 className="page-title">Hệ thống Phân phối Hàng hóa</h1>
-          <p className="page-subtitle">
+          <h1 className="distribution-title">Hệ thống Phân phối Hàng hóa</h1>
+          <p className="distribution-subtitle">
             Gửi yêu cầu phân phối sản phẩm một cách nhanh chóng và theo dõi trạng thái real-time
           </p>
         </div>
