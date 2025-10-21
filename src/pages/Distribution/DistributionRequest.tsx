@@ -107,7 +107,7 @@ const DistributionRequest = () => {
 
         <div className="form-content">
           {/* Product List Section */}
-          <div className="form-group">
+          <div className="distribution-request__form-group">
             <label className="distribution-request__form-label">
               <Package size={18} />
               <span>Danh sách sản phẩm</span>
@@ -119,7 +119,7 @@ const DistributionRequest = () => {
                 <div className="input-group">
                   <label>Sản phẩm</label>
                   <select 
-                    className="form-select"
+                    className="distribution-request__form-select"
                     value={row.selectedProduct}
                     onChange={(e) => handleProductRowChange(row.rowId, 'selectedProduct', e.target.value)}
                   >
@@ -134,7 +134,7 @@ const DistributionRequest = () => {
                   <label>Số lượng</label>
                   <input 
                     type="number" 
-                    className="form-input"
+                    className="distribution-request__form-input"
                     value={row.quantity}
                     onChange={(e) => handleProductRowChange(row.rowId, 'quantity', Number(e.target.value))}
                     min="1"
@@ -145,7 +145,7 @@ const DistributionRequest = () => {
                   <label>Đơn vị tính</label>
                   <input 
                     type="text" 
-                    className="form-input disabled"
+                    className="distribution-request__form-input disabled"
                     value="Tự động điền từ sản phẩm"
                     disabled
                   />
@@ -191,7 +191,7 @@ const DistributionRequest = () => {
           </div>
 
           {/* Delivery Address Section */}
-          <div className="form-group">
+          <div className="distribution-request__form-group">
             <label className="distribution-request__form-label">
               <MapPin size={18} />
               <span>Địa chỉ giao hàng</span>

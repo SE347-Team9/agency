@@ -46,7 +46,7 @@
 }
 
 /* Form Groups */
-.form-group {
+.distribution-request__form-group {
   margin-bottom: 32px;
 }
 
@@ -85,8 +85,8 @@
   color: #475569;
 }
 
-.form-select,
-.form-input {
+.distribution-request__form-select,
+.distribution-request__form-input {
   padding: 12px 16px;
   border: 2px solid #e2e8f0;
   border-radius: 8px;
@@ -95,14 +95,14 @@
   transition: all 0.2s ease;
 }
 
-.form-select:focus,
-.form-input:focus {
+.distribution-request__form-select:focus,
+.distribution-request__form-input:focus {
   outline: none;
   border-color: #1a73e8;
   box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
 }
 
-.form-input.disabled {
+.distribution-request__form-input.disabled {
   background: #f1f5f9;
   color: #94a3b8;
   cursor: not-allowed;
