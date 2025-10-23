@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './routes/auth/Login.tsx'
 import Register from './routes/auth/Register.tsx'
+import HomePage from './routes/home/index.tsx'
 import MainLayout from './components/layout/MainLayout.tsx'
 import ExportManagement from './pages/Export/ExportManagement.tsx'
 import ReceiveGoods from './pages/ReceiveGood/ReceiveGoods.tsx'
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/export-management" element={
           <MainLayout>
             <ExportManagement />
