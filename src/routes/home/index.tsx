@@ -133,6 +133,69 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Partners Section */}
+      <section className="home-partners">
+        <div className="home-partners__container">
+          <div className="home-partners__header">
+            <span className="home-partners__badge">Đối Tác Của Chúng Tôi</span>
+            <h2 className="home-partners__title">
+              Được Tin Tưởng Bởi Các <span className="home-partners__title-highlight">Thương Hiệu Hàng Đầu</span>
+            </h2>
+            <p className="home-partners__description">
+              Hơn 1000+ doanh nghiệp lớn nhỏ trên toàn quốc đang sử dụng giải pháp của chúng tôi
+            </p>
+          </div>
+
+          <div className="home-partners__showcase">
+            <div className="home-partners__row home-partners__row--primary">
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png" alt="Google" className="home-partners__logo" />
+                </div>
+              </div>
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png" alt="Amazon" className="home-partners__logo" />
+                </div>
+              </div>
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png" alt="Meta" className="home-partners__logo" />
+                </div>
+              </div>
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft" className="home-partners__logo" />
+                </div>
+              </div>
+            </div>
+
+            <div className="home-partners__row home-partners__row--secondary">
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1667px-Apple_logo_black.svg.png" alt="Apple" className="home-partners__logo" />
+                </div>
+              </div>
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png" alt="Netflix" className="home-partners__logo" />
+                </div>
+              </div>
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/1200px-Tesla_Motors.svg.png" alt="Tesla" className="home-partners__logo" />
+                </div>
+              </div>
+              <div className="home-partners__card">
+                <div className="home-partners__card-inner">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Shopee.svg/2560px-Shopee.svg.png" alt="Shopee" className="home-partners__logo" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="home-features">
         <div className="home-features__header">

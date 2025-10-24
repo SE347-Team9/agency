@@ -403,6 +403,271 @@
 }
 
 /* ============================================
+   PARTNERS SECTION
+   ============================================ */
+.home-partners {
+  padding: 100px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-partners__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, 
+    rgba(219, 234, 254, 0.3) 0%, 
+    rgba(224, 242, 254, 0.5) 50%,
+    rgba(219, 234, 254, 0.3) 100%);
+  border-radius: 40px;
+  padding: 60px;
+  border: 3px solid rgba(147, 197, 253, 0.6);
+  box-shadow: 0 10px 40px rgba(59, 130, 246, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-partners__container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(96, 165, 250, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.home-partners__header {
+  text-align: center;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  position: relative;
+  padding: 60px 40px 40px;
+}
+
+.home-partners__header::before {
+  display: none;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.home-partners__badge {
+  display: inline-block;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, #1a73e8 0%, #3b82f6 100%);
+  border-radius: 50px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-partners__badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent);
+  transition: left 0.5s;
+}
+
+.home-partners__badge:hover::before {
+  left: 100%;
+}
+
+.home-partners__title {
+  font-size: 56px;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 24px 0;
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+.home-partners__title-highlight {
+  background: linear-gradient(135deg, #1a73e8 0%, #3b82f6 50%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
+}
+
+.home-partners__title-highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #1a73e8 0%, #3b82f6 50%, #60a5fa 100%);
+  border-radius: 2px;
+  opacity: 0.3;
+}
+
+.home-partners__description {
+  font-size: 19px;
+  color: #475569;
+  line-height: 1.8;
+  margin: 0;
+  font-weight: 500;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.home-partners__showcase {
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-partners__row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.home-partners__row:last-child {
+  margin-bottom: 0;
+}
+
+.home-partners__card {
+  position: relative;
+  perspective: 1000px;
+}
+
+.home-partners__card-inner {
+  position: relative;
+  background: white;
+  padding: 48px 40px;
+  border-radius: 20px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #f1f5f9;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.home-partners__card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.home-partners__card-inner::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #3b82f6, #1a73e8, #2563eb);
+  border-radius: 20px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+.home-partners__card:hover .home-partners__card-inner {
+  transform: translateY(-12px);
+  border-color: transparent;
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15);
+}
+
+.home-partners__card:hover .home-partners__card-inner::before {
+  opacity: 1;
+}
+
+.home-partners__card:hover .home-partners__card-inner::after {
+  opacity: 1;
+}
+
+.home-partners__logo {
+  max-width: 85%;
+  max-height: 80px;
+  height: auto;
+  object-fit: contain;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.home-partners__card:hover .home-partners__logo {
+  transform: scale(1.08);
+}
+
+.home-partners__stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  padding: 50px 60px;
+  background: white;
+  border-radius: 24px;
+  border: 2px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 1;
+}
+
+.home-partners__stat-item {
+  text-align: center;
+}
+
+.home-partners__stat-number {
+  font-size: 48px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #1a73e8 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.home-partners__stat-label {
+  font-size: 16px;
+  color: #64748b;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.home-partners__stat-divider {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    #e2e8f0 50%, 
+    transparent 100%);
+}
+
+/* ============================================
    FEATURES SECTION
    ============================================ */
 .home-features {
@@ -680,6 +945,7 @@
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   color: white;
   padding: 80px 20px 0;
+  margin-top: 100px;
 }
 
 .home-footer__container {
