@@ -11,6 +11,7 @@ import PaymentManagement from './pages/Payment/PaymentManagement.tsx'
 import Reports from './pages/Report/Reports.tsx'
 import AddReport from './pages/Report/AddReport.tsx'
 import ViewReport from './pages/Report/ViewReport.tsx'
+import NotFound from './routes/NotFound/NotFound.tsx'
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           </MainLayout>
         } />
         <Route path="/" element={<Navigate to="/export-management" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
