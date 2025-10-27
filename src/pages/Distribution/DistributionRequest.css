@@ -1,3 +1,8 @@
+.history-list {
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
 /* Text xác nhận nhận hàng bởi agency (thay cho button) */
 .confirm-receive-text {
   color: #ff6d2d;
