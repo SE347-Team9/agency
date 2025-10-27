@@ -12,6 +12,7 @@ import Reports from './pages/Report/Reports.tsx'
 import AddReport from './pages/Report/AddReport.tsx'
 import ViewReport from './pages/Report/ViewReport.tsx'
 import NotFound from './routes/NotFound/NotFound.tsx'
+import ViewImport from './pages/ReceiveGood/ViewImport.tsx'
 
 function App() {
   return (
@@ -58,6 +59,11 @@ function App() {
         <Route path="/view-report/:reportId" element={
           <MainLayout>
             <ViewReport />
+          </MainLayout>
+        } />
+        <Route path="/import/view/:id" element={
+          <MainLayout>
+            <ViewImport />
           </MainLayout>
         } />
         <Route path="/" element={<Navigate to="/export-management" replace />} />

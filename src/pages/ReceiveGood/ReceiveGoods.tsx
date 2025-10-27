@@ -1,4 +1,6 @@
+
 import { ClipboardList, Package2, ShoppingCart, Calendar, FileText, DollarSign, MoreVertical } from 'lucide-react'
+import { useNavigate } from 'react-router-dom';
 import './ReceiveGoods.css'
 
 interface ImportRecord {
@@ -18,6 +20,7 @@ interface ImportRecord {
 }
 
 const ReceiveGoods = () => {
+  const navigate = useNavigate();
   // Mock data
   const importRecords: ImportRecord[] = [
     {
@@ -183,7 +186,7 @@ const ReceiveGoods = () => {
                   </span>
                 </td>
                 <td>
-                  <button className="action-btn">
+                  <button className="action-btn" onClick={() => navigate(`/import/view/${record.code}`)}>
                     <FileText size={16} />
                     Chi tiết
                   </button>

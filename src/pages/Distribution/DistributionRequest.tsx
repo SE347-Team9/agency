@@ -35,7 +35,7 @@ const DistributionRequest = () => {
   const [onHold, setOnHold] = useState(false)
 
   // Mock data for order history
-  const orderHistory: OrderHistory[] = [
+  const [orderHistory, setOrderHistory] = useState<OrderHistory[]>([
     {
       id: '1',
       code: '#DH000002',
@@ -49,7 +49,7 @@ const DistributionRequest = () => {
         { name: 'Sữa Vinamilk', quantity: 3 }
       ]
     }
-  ]
+  ]);
 
   const handleAddProductRow = () => {
     setProductRows([
@@ -71,8 +71,27 @@ const DistributionRequest = () => {
   }
 
   const handleSubmit = () => {
-    console.log('Submit request:', { products, address, onHold })
-    // Handle form submission
+    // Tạo đơn hàng mới từ dữ liệu form
+    if (productRows.length === 0 || !address.trim()) return;
+    const newProducts = productRows
+      .filter(row => row.selectedProduct && row.quantity > 0)
+      .map(row => ({ name: row.selectedProduct, quantity: row.quantity }));
+    if (newProducts.length === 0) return;
+    const newOrder: OrderHistory = {
+      id: Date.now().toString(),
+      code: `#DH${(orderHistory.length + 2).toString().padStart(6, '0')}`,
+      status: 'Không xác định',
+      productCount: newProducts.length,
+      address: address,
+      date: new Date().toLocaleDateString('vi-VN'),
+      sender: 'Nguyễn Trọng Đại',
+      products: newProducts
+    };
+    setOrderHistory([newOrder, ...orderHistory]);
+    // Reset form
+    setProductRows([{ rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }]);
+    setAddress('');
+    setOnHold(false);
   }
 
   const handleReset = () => {
@@ -297,9 +316,9 @@ const DistributionRequest = () => {
                   </ul>
                 </div>
 
-                <button className="btn-confirm">
+                <div className="confirm-receive-text">
                   Xác nhận nhận hàng bởi agency
-                </button>
+                </div>
               </div>
             </div>
           ))}

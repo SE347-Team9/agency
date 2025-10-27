@@ -1,3 +1,5 @@
+
+import { useState } from 'react';
 import { Receipt, List, DollarSign, FileText } from 'lucide-react'
 import './PaymentManagement.css'
 
@@ -13,9 +15,18 @@ interface PaymentRecord {
 
 const PaymentManagement = () => {
   // Mock data
-  const payments: PaymentRecord[] = [
+  const [payments, setPayments] = useState<PaymentRecord[]>([
     {
       id: '1',
+      code: 'PT00005',
+      agencyName: 'Đại lý Đại',
+      date: '10/10/2025',
+      amount: 100000,
+      status: 'pending',
+      creator: 'Nguyễn Trọng Tèo'
+    },
+    {
+      id: '2',
       code: 'PT00002',
       agencyName: 'Đại lý Đại',
       date: '16/5/2024',
@@ -23,7 +34,13 @@ const PaymentManagement = () => {
       status: 'completed',
       creator: 'Nguyễn Trọng Đại'
     }
-  ]
+  ]);
+
+  const handlePay = (id: string) => {
+    setPayments(payments => payments.map(p =>
+      p.id === id ? { ...p, status: 'completed' } : p
+    ));
+  };
 
   const totalPayments = payments.length
   const totalAmount = payments.reduce((sum, payment) => sum + payment.amount, 0)
@@ -33,7 +50,7 @@ const PaymentManagement = () => {
       case 'completed':
         return 'Hoàn thành'
       case 'pending':
-        return 'Đang xử lý'
+        return 'Chờ thanh toán'
       case 'cancelled':
         return 'Đã hủy'
       default:
@@ -120,10 +137,12 @@ const PaymentManagement = () => {
                 </td>
                 <td className="text-muted">{payment.creator}</td>
                 <td>
-                  <button className="action-button">
-                    <FileText size={16} />
-                    Chi tiết
-                  </button>
+                  {payment.status === 'pending' && (
+                    <button className="action-button pay-btn" onClick={() => handlePay(payment.id)}>
+                      <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M2 11h20"/></svg>
+                      Thanh toán
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
