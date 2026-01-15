@@ -1,9 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { 
-  RefreshCw, 
   Package, 
   FileText, 
-  BarChart3, 
   CreditCard, 
   Building2,
   Home,
@@ -22,28 +20,16 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
 
   const menuItems = [
     {
-      id: 'export',
-      icon: RefreshCw,
-      label: 'Quản lý xuất hàng',
-      path: '/export-management'
+      id: 'request',
+      icon: FileText,
+      label: 'Yêu cầu phân phối',
+      path: '/distribution-request'
     },
     {
       id: 'receive',
       icon: Package,
       label: 'Nhận hàng',
       path: '/receive-goods'
-    },
-    {
-      id: 'request',
-      icon: FileText,
-      label: 'Gửi yêu cầu phân phối',
-      path: '/distribution-request'
-    },
-    {
-      id: 'report',
-      icon: BarChart3,
-      label: 'Lập báo cáo',
-      path: '/reports'
     },
     {
       id: 'payment',
@@ -54,7 +40,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
     {
       id: 'agency',
       icon: Building2,
-      label: 'Quản lý đại lý',
+      label: 'Thông tin đại lý',
       path: '/agency-management'
     }
   ]

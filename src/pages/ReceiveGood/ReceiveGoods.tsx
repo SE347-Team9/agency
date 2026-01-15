@@ -6,17 +6,22 @@ import './ReceiveGoods.css'
 interface ImportRecord {
   id: string
   code: string
-  date: string
+  shipDate: string
+  receiveDate: string
   agency: {
     name: string
     phone: string
   }
   products: {
     name: string
+    batch: string
+    mfgDate: string
+    expDate: string
     quantity: number
+    price: number
   }[]
   totalAmount: number
-  status: 'delivered' | 'pending' | 'cancelled'
+  status: 'received' | 'pending' | 'cancelled'
 }
 
 const ReceiveGoods = () => {
@@ -26,17 +31,18 @@ const ReceiveGoods = () => {
     {
       id: '1',
       code: 'PX002',
-      date: '2024-05-11',
+      shipDate: '2024-05-10',
+      receiveDate: '2024-05-11',
       agency: {
         name: 'Đại lý Đại',
         phone: 'N/A'
       },
       products: [
-        { name: 'Nước ngọt Pepsi (80 pcs)', quantity: 80 },
-        { name: 'Sữa Vinamilk (3 pcs)', quantity: 3 }
+        { name: 'Nước ngọt Pepsi', batch: 'LO-20260110', mfgDate: '2024-01-15', expDate: '2025-01-15', quantity: 80, price: 9000 },
+        { name: 'Sữa Vinamilk', batch: 'LO-20260110', mfgDate: '2024-02-20', expDate: '2025-02-20', quantity: 3, price: 60000 }
       ],
       totalAmount: 900000,
-      status: 'delivered'
+      status: 'received'
     }
   ]
 
@@ -45,10 +51,10 @@ const ReceiveGoods = () => {
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'delivered':
-        return 'Đã giao hàng'
+      case 'received':
+        return 'Đã nhận'
       case 'pending':
-        return 'Đang xử lý'
+        return 'Chờ nhận'
       case 'cancelled':
         return 'Đã hủy'
       default:
@@ -58,7 +64,7 @@ const ReceiveGoods = () => {
 
   const getStatusClass = (status: string) => {
     switch (status) {
-      case 'delivered':
+      case 'received':
         return 'status-delivered'
       case 'pending':
         return 'status-pending'
@@ -77,9 +83,9 @@ const ReceiveGoods = () => {
           <ClipboardList size={36} />
         </div>
         <div className="header-text">
-          <h1 className="receive-title">Lịch sử Nhập Kho</h1>
+          <h1 className="receive-title">Lịch Sử Nhận Hàng</h1>
           <p className="receive-subtitle">
-            Lịch sử các phiếu nhập hàng vào kho tổng cho đại lý của bạn.
+            Lịch sử các phiếu nhận hàng cho đại lý của bạn.
           </p>
         </div>
       </div>
@@ -91,7 +97,7 @@ const ReceiveGoods = () => {
             <Package2 size={24} />
           </div>
           <div className="stat-content">
-            <div className="stat-label">Tổng Số Phiếu Nhập</div>
+            <div className="stat-label">Tổng Số Phiếu Nhận Hàng</div>
             <div className="stat-value">{totalImports}</div>
           </div>
         </div>
@@ -101,7 +107,7 @@ const ReceiveGoods = () => {
             <ShoppingCart size={24} />
           </div>
           <div className="stat-content">
-            <div className="stat-label">Tổng Giá Trị Đã Nhập</div>
+            <div className="stat-label">Tổng Giá Trị Nhập Hàng</div>
             <div className="stat-value">{totalValue.toLocaleString('vi-VN')} VND</div>
           </div>
         </div>
@@ -115,31 +121,31 @@ const ReceiveGoods = () => {
               <th>
                 <div className="th-content">
                   <FileText size={16} />
-                  <span>MÃ PHIẾU</span>
+                  <span>MÃ PHIẾU NHẬN</span>
                 </div>
               </th>
               <th>
                 <div className="th-content">
                   <Calendar size={16} />
-                  <span>NGÀY XUẤT</span>
+                  <span>NGÀY GIAO HÀNG</span>
                 </div>
               </th>
               <th>
                 <div className="th-content">
-                  <FileText size={16} />
-                  <span>ĐẠI LÝ</span>
+                  <Calendar size={16} />
+                  <span>NGÀY NHẬN HÀNG</span>
                 </div>
               </th>
               <th>
                 <div className="th-content">
                   <Package2 size={16} />
-                  <span>SẢN PHẨM</span>
+                  <span>SỐ MẶT HÀNG</span>
                 </div>
               </th>
               <th>
                 <div className="th-content">
                   <DollarSign size={16} />
-                  <span>TỔNG TIỀN</span>
+                  <span>TỔNG GIÁ TRỊ</span>
                 </div>
               </th>
               <th>
@@ -150,7 +156,7 @@ const ReceiveGoods = () => {
               <th>
                 <div className="th-content">
                   <MoreVertical size={16} />
-                  <span>HÀNH ĐỘNG</span>
+                  <span>THAO TÁC</span>
                 </div>
               </th>
             </tr>
@@ -161,22 +167,9 @@ const ReceiveGoods = () => {
                 <td>
                   <span className="record-code">{record.code}</span>
                 </td>
-                <td className="text-gray">{record.date}</td>
-                <td>
-                  <div className="agency-info">
-                    <div className="agency-name">{record.agency.name}</div>
-                    <div className="agency-phone">📞 {record.agency.phone}</div>
-                  </div>
-                </td>
-                <td>
-                  <div className="products-list">
-                    {record.products.map((product, idx) => (
-                      <div key={idx} className="product-item">
-                        {product.name}
-                      </div>
-                    ))}
-                  </div>
-                </td>
+                <td className="text-center">{new Date(record.shipDate).toLocaleDateString('vi-VN')}</td>
+                <td className="text-center">{new Date(record.receiveDate).toLocaleDateString('vi-VN')}</td>
+                <td className="text-center">{record.products.length}</td>
                 <td>
                   <span className="amount">{record.totalAmount.toLocaleString('vi-VN')} VND</span>
                 </td>
@@ -186,7 +179,7 @@ const ReceiveGoods = () => {
                   </span>
                 </td>
                 <td>
-                  <button className="action-btn" onClick={() => navigate(`/import/view/${record.code}`)}>
+                  <button className="action-btn" onClick={() => navigate(`/view-receive/${record.code}`)}>
                     <FileText size={16} />
                     Chi tiết
                   </button>

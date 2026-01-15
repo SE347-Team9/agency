@@ -5,6 +5,7 @@ import HomePage from './routes/home/index.tsx'
 import MainLayout from './components/layout/MainLayout.tsx'
 import ExportManagement from './pages/Export/ExportManagement.tsx'
 import ReceiveGoods from './pages/ReceiveGood/ReceiveGoods.tsx'
+import ViewReceive from './pages/ReceiveGood/ViewReceive.tsx'
 import DistributionRequest from './pages/Distribution/DistributionRequest.tsx'
 import AgencyManagement from './pages/AgencyManagement/AgencyManagement.tsx'
 import PaymentManagement from './pages/Payment/PaymentManagement.tsx'
@@ -29,6 +30,11 @@ function App() {
         <Route path="/receive-goods" element={
           <MainLayout>
             <ReceiveGoods />
+          </MainLayout>
+        } />
+        <Route path="/view-receive/:code" element={
+          <MainLayout>
+            <ViewReceive />
           </MainLayout>
         } />
         <Route path="/distribution-request" element={

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Package, Plus, MapPin, Clock, Send, RotateCcw } from 'lucide-react'
+import { Package, Plus, Clock, Send, RotateCcw, MapPin } from 'lucide-react'
 import './DistributionRequest.css'
 
 interface Product {
@@ -7,12 +7,15 @@ interface Product {
   name: string
   quantity: number
   unit: string
+  price: number
 }
 
 interface ProductInputRow {
   rowId: string
   selectedProduct: string
   quantity: number
+  unit: string
+  price: number
 }
 
 interface OrderHistory {
@@ -27,18 +30,30 @@ interface OrderHistory {
 }
 
 const DistributionRequest = () => {
+  // Agency debt info
+  const agencyDebtInfo = {
+    currentDebt: 5000000, // 5 triệu đ
+    creditLimit: 50000000 // 50 triệu đ
+  }
+
+  // Product database with units and prices
+  const productDatabase = [
+    { id: '1', name: 'Nước ngọt Pepsi', unit: 'Thùng', price: 120000 },
+    { id: '2', name: 'Sữa Vinamilk', unit: 'Lốc', price: 85000 },
+    { id: '3', name: 'Bánh quy Oreo', unit: 'Hộp', price: 45000 }
+  ]
+
   const [productRows, setProductRows] = useState<ProductInputRow[]>([
-    { rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }
+    { rowId: Date.now().toString(), selectedProduct: '', quantity: 1, unit: '', price: 0 }
   ])
   const [products, setProducts] = useState<Product[]>([])
-  const [address, setAddress] = useState('')
   const [onHold, setOnHold] = useState(false)
 
   // Mock data for order history
   const [orderHistory, setOrderHistory] = useState<OrderHistory[]>([
     {
       id: '1',
-      code: '#DH000002',
+      code: 'DH001',
       status: 'Không xác định',
       productCount: 2,
       address: 'Địa chỉ từ hệ thống',
@@ -54,7 +69,7 @@ const DistributionRequest = () => {
   const handleAddProductRow = () => {
     setProductRows([
       ...productRows,
-      { rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }
+      { rowId: Date.now().toString(), selectedProduct: '', quantity: 1, unit: '', price: 0 }
     ])
   }
 
@@ -63,42 +78,82 @@ const DistributionRequest = () => {
   }
 
   const handleProductRowChange = (rowId: string, field: string, value: any) => {
-    setProductRows(productRows.map(row =>
-      row.rowId === rowId
-        ? { ...row, [field]: value }
-        : row
-    ))
+    setProductRows(productRows.map(row => {
+      if (row.rowId === rowId) {
+        const updatedRow = { ...row, [field]: value }
+        
+        // Auto-fill unit and price when product is selected
+        if (field === 'selectedProduct') {
+          const product = productDatabase.find(p => p.name === value)
+          if (product) {
+            updatedRow.unit = product.unit
+            updatedRow.price = product.price
+          } else {
+            updatedRow.unit = ''
+            updatedRow.price = 0
+          }
+        }
+        
+        return updatedRow
+      }
+      return row
+    }))
+  }
+
+  // Calculate total amount
+  const calculateTotal = () => {
+    return productRows.reduce((sum, row) => {
+      if (row.selectedProduct && row.quantity > 0) {
+        return sum + (row.price * row.quantity)
+      }
+      return sum
+    }, 0)
+  }
+
+  // Check if request can be created based on debt limit
+  const canCreateRequest = () => {
+    const total = calculateTotal()
+    const newTotalDebt = agencyDebtInfo.currentDebt + total
+    return newTotalDebt <= agencyDebtInfo.creditLimit
+  }
+
+  const getRemainingDebtLimit = () => {
+    return agencyDebtInfo.creditLimit - agencyDebtInfo.currentDebt
   }
 
   const handleSubmit = () => {
+    // Check debt limit before creating order
+    if (!canCreateRequest()) {
+      alert('Công nợ hiện tại cộng tổng tiền yêu cầu vượt quá hạn mức cho phép. Vui lòng giảm số lượng hoặc thanh toán công nợ.');
+      return;
+    }
+
     // Tạo đơn hàng mới từ dữ liệu form
-    if (productRows.length === 0 || !address.trim()) return;
+    if (productRows.length === 0) return;
     const newProducts = productRows
       .filter(row => row.selectedProduct && row.quantity > 0)
       .map(row => ({ name: row.selectedProduct, quantity: row.quantity }));
     if (newProducts.length === 0) return;
     const newOrder: OrderHistory = {
       id: Date.now().toString(),
-      code: `#DH${(orderHistory.length + 2).toString().padStart(6, '0')}`,
+      code: `DH${(orderHistory.length + 1).toString().padStart(3, '0')}`,
       status: 'Không xác định',
       productCount: newProducts.length,
-      address: address,
+      address: 'Địa chỉ từ hệ thống',
       date: new Date().toLocaleDateString('vi-VN'),
       sender: 'Nguyễn Trọng Đại',
       products: newProducts
     };
     setOrderHistory([newOrder, ...orderHistory]);
     // Reset form
-    setProductRows([{ rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }]);
-    setAddress('');
+    setProductRows([{ rowId: Date.now().toString(), selectedProduct: '', quantity: 1, unit: '', price: 0 }]);
     setOnHold(false);
   }
 
   const handleReset = () => {
     setProducts([])
-    setAddress('')
     setOnHold(false)
-    setProductRows([{ rowId: Date.now().toString(), selectedProduct: '', quantity: 1 }])
+    setProductRows([{ rowId: Date.now().toString(), selectedProduct: '', quantity: 1, unit: '', price: 0 }])
   }
 
   return (
@@ -143,9 +198,9 @@ const DistributionRequest = () => {
                     onChange={(e) => handleProductRowChange(row.rowId, 'selectedProduct', e.target.value)}
                   >
                     <option value="">Chọn sản phẩm...</option>
-                    <option value="Nước ngọt Pepsi">Nước ngọt Pepsi</option>
-                    <option value="Sữa Vinamilk">Sữa Vinamilk</option>
-                    <option value="Bánh quy Oreo">Bánh quy Oreo</option>
+                    {productDatabase.map((product) => (
+                      <option key={product.id} value={product.name}>{product.name}</option>
+                    ))}
                   </select>
                 </div>
 
@@ -165,20 +220,29 @@ const DistributionRequest = () => {
                   <input 
                     type="text" 
                     className="distribution-request__form-input disabled"
-                    value="Tự động điền từ sản phẩm"
+                    value={row.unit || 'Chọn sản phẩm trước'}
                     disabled
                   />
                 </div>
 
-                <div className="product-row-actions">
-                  {productRows.length > 1 && (
-                    <button 
-                      className="btn-remove-row"
-                      onClick={() => handleRemoveProductRow(row.rowId)}
-                    >
-                      Xóa
-                    </button>
-                  )}
+                <div className="input-group">
+                  <label>Thành tiền</label>
+                  <div className="input-with-delete">
+                    <input 
+                      type="text" 
+                      className="distribution-request__form-input disabled"
+                      value={row.selectedProduct ? `${(row.price * row.quantity).toLocaleString('vi-VN')} ₫` : '0 ₫'}
+                      disabled
+                    />
+                    {productRows.length > 1 && (
+                      <button 
+                        className="btn-remove-row"
+                        onClick={() => handleRemoveProductRow(row.rowId)}
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -190,6 +254,25 @@ const DistributionRequest = () => {
               <Plus size={16} />
               Thêm sản phẩm
             </button>
+
+            {/* Total Amount Display */}
+            <div className="total-amount-section">
+              <div className="total-label">Tổng tiền:</div>
+              <div className="total-value">{calculateTotal().toLocaleString('vi-VN')} ₫</div>
+            </div>
+
+            {/* Debt Information */}
+            <div className="debt-info-section">
+              <div className="debt-item">
+                <span className="debt-label">Công nợ hiện tại:</span>
+                <span className="debt-value">{agencyDebtInfo.currentDebt.toLocaleString('vi-VN')} ₫</span>
+              </div>
+              <span className="debt-divider">/</span>
+              <div className="debt-item">
+                <span className="debt-label">Hạn mức:</span>
+                <span className="debt-value">{agencyDebtInfo.creditLimit.toLocaleString('vi-VN')} ₫</span>
+              </div>
+            </div>
 
             {products.length > 0 && (
               <div className="added-products">
@@ -207,29 +290,6 @@ const DistributionRequest = () => {
                 ))}
               </div>
             )}
-          </div>
-
-          {/* Delivery Address Section */}
-          <div className="distribution-request__form-group">
-            <label className="distribution-request__form-label">
-              <MapPin size={18} />
-              <span>Địa chỉ giao hàng</span>
-              <span className="required">*</span>
-            </label>
-
-            <div className="address-input-wrapper">
-              <textarea
-                className="form-textarea"
-                placeholder="Nhập địa chỉ chi tiết bao gồm số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố..."
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                rows={4}
-              />
-              <div className="address-hint">
-                <span>💡</span>
-                <span>Địa chỉ chi tiết giúp quá trình giao hàng được nhanh chóng và chính xác</span>
-              </div>
-            </div>
           </div>
 
           {/* Testing Tools Section */}
@@ -250,7 +310,12 @@ const DistributionRequest = () => {
 
           {/* Action Buttons */}
           <div className="form-actions">
-            <button className="btn-submit" onClick={handleSubmit}>
+            <button 
+              className="btn-submit" 
+              onClick={handleSubmit}
+              disabled={!canCreateRequest()}
+              title={!canCreateRequest() ? `Công nợ sẽ vượt hạn mức. Còn lại: ${getRemainingDebtLimit().toLocaleString('vi-VN')} ₫` : ''}
+            >
               <Send size={20} />
               Gửi yêu cầu phân phối
             </button>
@@ -276,9 +341,6 @@ const DistributionRequest = () => {
               <div className="history-card-header">
                 <div className="order-code">
                   <strong>{order.code}</strong>
-                  <span className={`status-badge ${order.status === 'Không xác định' ? 'status-undefined' : ''}`}>
-                    {order.status}
-                  </span>
                 </div>
               </div>
 
@@ -289,19 +351,8 @@ const DistributionRequest = () => {
                     <span>{order.productCount} sản phẩm</span>
                   </div>
                   <div className="info-item">
-                    <MapPin size={16} />
-                    <span>{order.address}</span>
-                  </div>
-                </div>
-
-                <div className="history-info-row">
-                  <div className="info-item">
                     <Clock size={16} />
                     <span>{order.date}</span>
-                  </div>
-                  <div className="info-item">
-                    <span>👤</span>
-                    <span>Người gửi: {order.sender}</span>
                   </div>
                 </div>
 
@@ -317,7 +368,7 @@ const DistributionRequest = () => {
                 </div>
 
                 <div className="confirm-receive-text">
-                  Xác nhận nhận hàng bởi agency
+                  Chờ duyệt bởi nhân viên
                 </div>
               </div>
             </div>
