@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Receipt, List, DollarSign, FileText } from 'lucide-react'
+import { Receipt, List, DollarSign } from 'lucide-react'
 import './PaymentManagement.css'
 
 interface PaymentRecord {

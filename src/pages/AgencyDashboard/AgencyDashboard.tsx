@@ -10,8 +10,6 @@ import {
   Building2
 } from 'lucide-react'
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
