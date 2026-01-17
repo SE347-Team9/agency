@@ -1,6 +1,6 @@
 import React from 'react';
 import './ViewImport.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, FileText, Calendar, User, Package } from 'lucide-react';
 
 // Mock data for demo
@@ -22,7 +22,7 @@ const importData = {
 
 const ViewImport: React.FC = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  // const { id } = useParams();
 
   // In real app, fetch importData by id
 
