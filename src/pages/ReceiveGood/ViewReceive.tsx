@@ -73,32 +73,6 @@ const ViewReceive = () => {
     )
   }
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'received':
-        return 'Đã nhận'
-      case 'pending':
-        return 'Chờ nhận'
-      case 'cancelled':
-        return 'Đã hủy'
-      default:
-        return status
-    }
-  }
-
-  const getStatusClass = (status: string) => {
-    switch (status) {
-      case 'received':
-        return 'status-received'
-      case 'pending':
-        return 'status-pending'
-      case 'cancelled':
-        return 'status-cancelled'
-      default:
-        return ''
-    }
-  }
-
   const calculateLineTotal = (quantity: number, price: number) => {
     return quantity * price
   }

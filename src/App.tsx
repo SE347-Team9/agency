@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './routes/auth/Login.tsx'
 import Register from './routes/auth/Register.tsx'
 import HomePage from './routes/home/index.tsx'
+import AgencyDashboard from './pages/AgencyDashboard/AgencyDashboard.tsx'
 import MainLayout from './components/layout/MainLayout.tsx'
 import ExportManagement from './pages/Export/ExportManagement.tsx'
 import ReceiveGoods from './pages/ReceiveGood/ReceiveGoods.tsx'
@@ -22,6 +23,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/dashboard" element={
+          <MainLayout>
+            <AgencyDashboard />
+          </MainLayout>
+        } />
         <Route path="/export-management" element={
           <MainLayout>
             <ExportManagement />
@@ -72,7 +78,7 @@ function App() {
             <ViewImport />
           </MainLayout>
         } />
-        <Route path="/" element={<Navigate to="/export-management" replace />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
